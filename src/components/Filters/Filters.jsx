@@ -12,7 +12,8 @@ export default class Filters extends React.Component {
       onChangeFilters,
       onChangePage,
       page,
-      total_pages
+      total_pages,
+      throwFilters
     } = this.props;
     return (
       <form className="mb-3">
@@ -29,7 +30,12 @@ export default class Filters extends React.Component {
           title={"Сортировать по году:"}
         />
         <SortGenres genres={genres} onChangeFilters={onChangeFilters} />
-        <Navigation onChangePage={onChangePage} page={page} total_pages={total_pages} />
+        <Navigation
+          throwFilters={throwFilters}
+          onChangePage={onChangePage}
+          page={page}
+          total_pages={total_pages}
+        />
       </form>
     );
   }

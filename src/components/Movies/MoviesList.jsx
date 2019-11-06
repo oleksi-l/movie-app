@@ -17,8 +17,8 @@ export default class MovieList extends Component {
 
   getMovies = (filters,page) => {
     const {sort_by,year,genres} = filters;
-    let genreList = (genres.length > 0) ? (genres.join(",")) : '';
-    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&primary_release_year=${year}&language=ru-RU&sort_by=${sort_by}&page=${page}&with_genres=${genreList}`;
+    let genreList = (genres.length > 0) ? (`&with_genres=${genres.join(',')}`) : '';
+    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}${genreList}&primary_release_year=${year}&language=ru-RU&sort_by=${sort_by}&page=${page}`;
     fetch(link)
       .then(response => {
         return response.json();
@@ -40,7 +40,7 @@ export default class MovieList extends Component {
       this.props.onChangePage(1);
       this.getMovies(this.props.filters,1);
     }
-    if(this.props.filters.genres != prevProps.filters.genres){
+    if (this.props.filters.genres !== prevProps.filters.genres) {
       this.props.onChangePage(1);
       this.getMovies(this.props.filters,1);
     }

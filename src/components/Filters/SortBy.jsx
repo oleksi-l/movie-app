@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Select from '../UI/Select';
+import React from "react";
+import PropTypes from "prop-types";
+import Select from "../UI/Select";
 
-class SortBy extends React.Component{
+class SortBy extends React.Component {
   static propTypes = {
     sort_by: PropTypes.string.isRequired,
-    onChangeFilters : PropTypes.func.isRequired,
+    onChangeFilters: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-      options:{
-        sort_by: [
+    options: {
+      sort_by: [
         {
           label: "Популярные по убыванию",
           value: "popularity.desc"
@@ -47,23 +47,22 @@ class SortBy extends React.Component{
         }
       ]
     }
+  };
+  render() {
+    const { sort_by, onChangeFilters, options, type, title } = this.props;
+    return (
+      <div className="form-group">
+        <label htmlFor={type}>{title}</label>
+        <Select
+          id={type}
+          name={type}
+          value={sort_by}
+          onChange={onChangeFilters}
+          options={options[type]}
+        />
+      </div>
+    );
   }
-    render(){
-      const {sort_by, onChangeFilters, options, type,title} = this.props;
-      console.log(sort_by);
-        return(
-            <div className="form-group">
-              <label htmlFor={type}>{title}</label>
-              <Select 
-                id={type} 
-                name={type} 
-                value={sort_by} 
-                onChange={onChangeFilters}
-                options={options[type]} 
-              />
-            </div>
-        )
-    }
 }
 
 export default SortBy;

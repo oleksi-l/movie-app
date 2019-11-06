@@ -8,16 +8,17 @@ class SortGenres extends React.Component {
 
   changeGenre = event => {
     let { genres, onChangeFilters } = this.props;
-    if (genres.includes(event.target.value)) {
-      genres = genres.filter(item => item != event.target.value);
+    let result = [...genres];
+    if (this.props.genres.includes(+event.target.value)) {
+      result = this.props.genres.filter(item => item != +event.target.value);
     } else {
-      genres.push(event.target.value);
+      result.push(+event.target.value);
     }
-    onChangeFilters({ target: { name: "genres", value: genres } });
+    onChangeFilters({ target: { name: "genres", value: result } });
   };
 
   render() {
-    const { checkboxes } = this.props;
+    const { checkboxes, genres } = this.props;
     return (
       <React.Fragment>
         <label>Сортировать по жанрам:</label>
@@ -29,10 +30,11 @@ class SortGenres extends React.Component {
                   className="form-check-input"
                   type="checkbox"
                   value={genre.id}
-                  id={genre.id}
+                  id={`g${genre.id}`}
+                  checked={genres.includes(genre.id) ? "checked" : ""}
                   onChange={this.changeGenre}
                 />
-                <label className="form-check-label" htmlFor={genre.id}>
+                <label className="form-check-label" htmlFor={`g${genre.id}`}>
                   {genre.name}
                 </label>
               </div>
