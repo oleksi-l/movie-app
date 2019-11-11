@@ -19,32 +19,30 @@ export default class App extends React.Component {
   }
 
   onChangeFilters = event => {
-    const newFilters = { ...this.state.filters, [event.target.name]: event.target.value };
-    this.setState({
-      filters: newFilters
-    });
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState(prevState =>({
+      filters:{
+        ...prevState.filters,
+        [name]:value 
+      }
+    }))
   };
 
   onChangePage = page => {
-    if(page > this.state.total_pages)
-      return false;
     this.setState({
       page
     });
   };
 
-  setTotalPages = count => {
+  updateTotalPages = count => {
     this.setState({
       total_pages: count
     });
   };
 
-  throwFilters = event => {
-    event.preventDefault();
-    this.setState({
-      ...this.state,
-      ...this.initialState
-    })
+  resetFilters = event => {
+    this.setState(this.initialState)
   }
 
   render() {
@@ -53,7 +51,7 @@ export default class App extends React.Component {
       <div className="container">
         <div className="row mt-4">
           <div className="col-4">
-            <div className="card" style={{ width: "100%" }}>
+            <div className="card">
               <div className="card-body">
                 <h3>Фильтры:</h3>
                 <Filters
@@ -62,7 +60,7 @@ export default class App extends React.Component {
                   page={page}
                   total_pages={total_pages}
                   onChangePage={this.onChangePage}
-                  throwFilters={this.throwFilters}
+                  resetFilters={this.resetFilters}
                 />
               </div>
             </div>
@@ -72,7 +70,7 @@ export default class App extends React.Component {
               filters={filters}
               page={page}
               onChangePage={this.onChangePage}
-              setTotalPages={this.setTotalPages}
+              updateTotalPages={this.updateTotalPages}
             />
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import SortBy from "./SortBy";
 import SortGenres from "./SortGenres";
-import Navigation from "../UI/Navigation/Navigation";
+import Pagination from "./Pagination";
 
 export default class Filters extends React.Component {
   render() {
@@ -13,7 +13,7 @@ export default class Filters extends React.Component {
       onChangePage,
       page,
       total_pages,
-      throwFilters
+      resetFilters
     } = this.props;
     return (
       <form className="mb-3">
@@ -30,8 +30,8 @@ export default class Filters extends React.Component {
           title={"Сортировать по году:"}
         />
         <SortGenres genres={genres} onChangeFilters={onChangeFilters} />
-        <Navigation
-          throwFilters={throwFilters}
+        <Pagination
+          resetFilters={resetFilters}
           onChangePage={onChangePage}
           page={page}
           total_pages={total_pages}
