@@ -1,7 +1,8 @@
 import React from "react";
 import { API_KEY_3, API_URL } from "../../api/api";
+import queryString from "query-string";
 
-class SortGenres extends React.Component {
+class SortGenres extends React.PureComponent {
   constructor() {
     super();
     this.state = {
@@ -10,21 +11,17 @@ class SortGenres extends React.Component {
   }
 
   componentDidMount() {
-    const queryString = require("query-string");
     const query = queryString.stringify({
       api_key: API_KEY_3,
       language: "ru-RU"
     });
     const url = `${API_URL}/genre/movie/list?${query}`;
     fetch(url)
-      .then(response => {
-        return response.json();
-      })
+      .then(response => response.json())
       .then(data => {
-        this.setState(prevState => ({
-          ...prevState.genresList,
+        this.setState({
           genresList: data.genres
-        }));
+        });
       });
   }
 

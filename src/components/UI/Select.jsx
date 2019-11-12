@@ -1,7 +1,6 @@
 import React from "react";
 
-const Select = props => {
-  const { id, name, value, options, onChange } = props;
+const Select = React.memo(({ id, name, value, options, onChange }) => {
   return (
     <select
       id={id}
@@ -10,7 +9,7 @@ const Select = props => {
       onChange={onChange}
       className="form-control"
     >
-      {props.options.map(option => {
+      {options.map(option => {
         return (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -19,6 +18,6 @@ const Select = props => {
       })}
     </select>
   );
-};
+});
 
 export default Select;

@@ -1,6 +1,5 @@
 import React from "react";
 import Filters from "./Filters/Filters";
-
 import MoviesList from "./Movies/MoviesList";
 
 export default class App extends React.Component {
@@ -14,22 +13,22 @@ export default class App extends React.Component {
       },
       page: 1,
       total_pages: 500
-    }
+    };
     this.state = this.initialState;
   }
 
   onChangeFilters = event => {
     const name = event.target.name;
     const value = event.target.value;
-    this.setState(prevState =>({
-      filters:{
+    this.setState(prevState => ({
+      filters: {
         ...prevState.filters,
-        [name]:value 
+        [name]: value
       }
-    }))
+    }));
   };
 
-  onChangePage = page => {
+  updatePage = page => {
     this.setState({
       page
     });
@@ -41,9 +40,9 @@ export default class App extends React.Component {
     });
   };
 
-  resetFilters = event => {
-    this.setState(this.initialState)
-  }
+  resetFilters = () => {
+    this.setState(this.initialState);
+  };
 
   render() {
     const { filters, page, total_pages } = this.state;
@@ -59,7 +58,7 @@ export default class App extends React.Component {
                   onChangeFilters={this.onChangeFilters}
                   page={page}
                   total_pages={total_pages}
-                  onChangePage={this.onChangePage}
+                  updatePage={this.updatePage}
                   resetFilters={this.resetFilters}
                 />
               </div>
@@ -69,7 +68,7 @@ export default class App extends React.Component {
             <MoviesList
               filters={filters}
               page={page}
-              onChangePage={this.onChangePage}
+              updatePage={this.updatePage}
               updateTotalPages={this.updateTotalPages}
             />
           </div>

@@ -6,11 +6,9 @@ import Pagination from "./Pagination";
 export default class Filters extends React.Component {
   render() {
     const {
-      filters: { sort_by },
-      filters: { year },
-      filters: { genres },
+      filters: { sort_by,year,genres },
       onChangeFilters,
-      onChangePage,
+      updatePage,
       page,
       total_pages,
       resetFilters
@@ -32,7 +30,7 @@ export default class Filters extends React.Component {
         <SortGenres genres={genres} onChangeFilters={onChangeFilters} />
         <Pagination
           resetFilters={resetFilters}
-          onChangePage={onChangePage}
+          updatePage={updatePage}
           page={page}
           total_pages={total_pages}
         />
