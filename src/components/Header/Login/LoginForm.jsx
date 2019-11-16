@@ -36,7 +36,6 @@ export default class LoginForm extends React.Component {
           errors.repeatPassword = "Password must be an equal";
         break;
     }
-    console.log(errors);
     return errors;
   };
 
