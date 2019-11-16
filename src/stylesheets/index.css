@@ -1,7 +1,10 @@
 body {
-  background: #fdfdfd; 
+  background: #fdfdfd;
 }
-.genres__list{
+.genres__list {
   max-height: 150px;
   overflow: auto;
+}
+.invalid-feedback {
+  display: block;
 }
