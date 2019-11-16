@@ -2,8 +2,13 @@ import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
 import Header from "./Header/Header";
+<<<<<<< HEAD
 import { API_URL, API_KEY_3, fetchApi } from "../api/api";
 import Cookies from "universal-cookie";
+=======
+import Cookies from "universal-cookie";
+import { API_KEY_3, API_URL, fetchApi } from "../api/api";
+>>>>>>> add-login-form
 
 const cookies = new Cookies();
 
@@ -23,6 +28,18 @@ export default class App extends React.Component {
     };
     this.state = this.initialState;
   }
+
+  updateUser = user => {
+    this.setState({ user });
+  };
+
+  updateSessionId = session_id => {
+    cookies.set("session_id", session_id, {
+      path: "/",
+      maxAge: 2592000
+    });
+    this.setState({ session_id });
+  };
 
   onChangeFilters = event => {
     const name = event.target.name;
@@ -51,6 +68,7 @@ export default class App extends React.Component {
     this.setState(this.initialState);
   };
 
+<<<<<<< HEAD
   updateUser = user => {
     this.setState({
       user
@@ -67,6 +85,8 @@ export default class App extends React.Component {
     });
   };
 
+=======
+>>>>>>> add-login-form
   componentDidMount() {
     const session_id = cookies.get("session_id");
     if (session_id) {

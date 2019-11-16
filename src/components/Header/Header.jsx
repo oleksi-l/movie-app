@@ -1,8 +1,15 @@
 import React from "react";
+<<<<<<< HEAD
 import Login from "./Login/Login";
 import User from "./User";
 
 class Header extends React.Component {
+=======
+import Login from "../Login/Login";
+import User from "./User";
+
+export default class Header extends React.Component {
+>>>>>>> add-login-form
   render() {
     const { user, updateUser, updateSessionId } = this.props;
     return (
@@ -10,7 +17,11 @@ class Header extends React.Component {
         <div className="container">
           <ul className="navbar-nav">
             <li className="nav-item active">
+<<<<<<< HEAD
               <a href="/" className="nav-link">
+=======
+              <a href="#" className="nav-link">
+>>>>>>> add-login-form
                 Home
               </a>
             </li>
@@ -25,5 +36,8 @@ class Header extends React.Component {
     );
   }
 }
+<<<<<<< HEAD
 
 export default Header;
+=======
+>>>>>>> add-login-form
