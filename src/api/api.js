@@ -18,9 +18,10 @@ export const fetchApi = (url, options = {}) => {
       .then(data => {
         resolve(data);
       })
-      .catch(response => response.json())
-      .then(error => {
-        reject(error);
+      .catch(response => {
+        response.json().then(error => {
+          reject(error);
+        });
       });
   });
 };

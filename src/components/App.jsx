@@ -2,8 +2,8 @@ import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
 import Header from "./Header/Header";
+import { API_URL, API_KEY_3, fetchApi } from "../api/api";
 import Cookies from "universal-cookie";
-import { API_KEY_3, API_URL, fetchApi } from "../api/api";
 
 const cookies = new Cookies();
 
@@ -61,6 +61,22 @@ export default class App extends React.Component {
 
   resetFilters = () => {
     this.setState(this.initialState);
+  };
+
+  updateUser = user => {
+    this.setState({
+      user
+    });
+  };
+
+  updateSessionId = session_id => {
+    cookies.set("session_id", session_id, {
+      path: "/",
+      maxAge: 2592000
+    });
+    this.setState({
+      session_id
+    });
   };
 
   componentDidMount() {

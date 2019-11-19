@@ -1,5 +1,5 @@
 import React from "react";
-import Login from "../Login/Login";
+import Login from "./Login/Login";
 import User from "./User";
 
 export default class Header extends React.Component {
