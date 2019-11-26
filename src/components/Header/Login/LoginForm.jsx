@@ -1,7 +1,8 @@
 import React from "react";
 import { API_URL, API_KEY_3, fetchApi } from "../../../api/api";
+import { AppContext } from "../../App";
 
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
   state = {
     username: "",
     password: "",
@@ -11,42 +12,38 @@ export default class LoginForm extends React.Component {
   };
 
   onChange = event => {
-    const name = [event.target.name];
+    const name = event.target.name;
     const value = event.target.value;
-    this.setState(prevState => ({
+    this.setState(state => ({
       [name]: value,
       errors: {
-        ...prevState.errors,
+        ...state.errors,
         [name]: null,
         base: null
       }
     }));
   };
 
-  validateFields = event => {
+  validateFields = () => {
     const errors = {};
-    switch (event.target.name) {
-      case "username":
-        if (this.state.username === "") errors.username = "Not empty";
-        break;
-      case "password":
-        if (this.state.password === "") errors.password = "Required";
-        break;
-      case "repeatPassword":
-        if (this.state.repeatPassword !== this.state.password)
-          errors.repeatPassword = "Password must be an equal";
-        break;
-    }
+
+    if (this.state.username === "") errors.username = "Not empty";
+
+    if (this.state.password === "") errors.password = "Required";
+
+    if (this.state.repeatPassword !== this.state.password)
+      errors.repeatPassword = "Password must be an equal";
+
     return errors;
   };
 
   onLogin = event => {
     event.preventDefault();
-    const errors = this.validateFields(event);
+    const errors = this.validateFields();
     if (Object.keys(errors).length > 0) {
-      this.setState(prevState => ({
+      this.setState(state => ({
         errors: {
-          ...prevState.errors,
+          ...state.errors,
           ...errors
         }
       }));
@@ -109,12 +106,13 @@ export default class LoginForm extends React.Component {
   };
 
   handleBlur = event => {
-    const errors = this.validateFields(event);
-    if (Object.keys(errors).length > 0) {
-      this.setState(prevState => ({
+    const name = event.target.name;
+    const errors = this.validateFields();
+    if (errors[name]) {
+      this.setState(state => ({
         errors: {
-          ...prevState.errors,
-          ...errors
+          ...state.errors,
+          [name]: errors[name]
         }
       }));
     }
@@ -186,3 +184,17 @@ export default class LoginForm extends React.Component {
     );
   }
 }
+
+export default props => {
+  return (
+    <AppContext.Consumer>
+      {context => (
+        <LoginForm
+          updateUser={context.updateUser}
+          updateSessionId={context.updateSessionId}
+          session_id={context.session_id}
+        />
+      )}
+    </AppContext.Consumer>
+  );
+};
