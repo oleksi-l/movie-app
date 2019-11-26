@@ -6,6 +6,7 @@ import { API_URL, API_KEY_3, fetchApi } from "../api/api";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
+export const AppContext = React.createContext();
 
 export default class App extends React.Component {
   constructor() {
@@ -91,42 +92,48 @@ export default class App extends React.Component {
   }
 
   render() {
+    // todo узнать зачем передавать session_id в LoginForm (там он получается в результате запроса)
     const { filters, page, total_pages, user } = this.state;
     return (
-      <div>
-        <Header
-          user={user}
-          updateUser={this.updateUser}
-          updateSessionId={this.updateSessionId}
-        />
-        <div className="container">
-          <div className="row mt-4">
-            <div className="col-4">
-              <div className="card">
-                <div className="card-body">
-                  <h3>Фильтры:</h3>
-                  <Filters
-                    filters={filters}
-                    onChangeFilters={this.onChangeFilters}
-                    page={page}
-                    total_pages={total_pages}
-                    updatePage={this.updatePage}
-                    resetFilters={this.resetFilters}
-                  />
+      <AppContext.Provider value={{
+        user: user,
+        updateUser: this.updateUser,
+        updateSessionId: this.updateSessionId,
+        session_id: this.state.session_id
+      }}>
+        <div>
+          <Header
+            user={user}
+          />
+          <div className="container">
+            <div className="row mt-4">
+              <div className="col-4">
+                <div className="card">
+                  <div className="card-body">
+                    <h3>Фильтры:</h3>
+                    <Filters
+                      filters={filters}
+                      onChangeFilters={this.onChangeFilters}
+                      page={page}
+                      total_pages={total_pages}
+                      updatePage={this.updatePage}
+                      resetFilters={this.resetFilters}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-8">
-              <MoviesList
-                filters={filters}
-                page={page}
-                updatePage={this.updatePage}
-                updateTotalPages={this.updateTotalPages}
-              />
+              <div className="col-8">
+                <MoviesList
+                  filters={filters}
+                  page={page}
+                  updatePage={this.updatePage}
+                  updateTotalPages={this.updateTotalPages}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </AppContext.Provider>
     );
   }
 }
