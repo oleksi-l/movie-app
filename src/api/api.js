@@ -27,6 +27,7 @@ export const fetchApi = (url, options = {}) => {
       });
   });
 };
+
 export default class CallApi {
   static get(url, options = {}) {
     const { params = {} } = options;
@@ -41,6 +42,7 @@ export default class CallApi {
       }
     });
   }
+
   static post(url, options = {}) {
     const { params = {}, body = {} } = options;
     const queryStringParams = {
