@@ -1,5 +1,6 @@
 import React from "react";
-import { API_URL, API_KEY_3, fetchApi } from "../../../api/api";
+import classNames from "classnames";
+import CallApi from "../../../api/api";
 import { AppContext } from "../../App";
 
 class LoginForm extends React.Component {
@@ -53,41 +54,30 @@ class LoginForm extends React.Component {
   };
 
   onSubmit = () => {
-    fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
+    CallApi.get("/authentication/token/new", {})
       .then(data => {
-        return fetchApi(
-          `${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
-          {
-            method: "POST",
-            mode: "cors",
-            headers: {
-              "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-              username: this.state.username,
-              password: this.state.password,
-              request_token: data.request_token
-            })
+        return CallApi.post("/authentication/token/validate_with_login", {
+          body: {
+            username: this.state.username,
+            password: this.state.password,
+            request_token: data.request_token
           }
-        );
+        });
       })
       .then(data => {
-        return fetchApi(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`, {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify({
+        return CallApi.post("/authentication/session/new", {
+          body: {
             request_token: data.request_token
-          })
+          }
         });
       })
       .then(data => {
         this.props.updateSessionId(data.session_id);
-        return fetchApi(
-          `${API_URL}/account?api_key=${API_KEY_3}&session_id=${data.session_id}`
-        );
+        return CallApi.get("/account", {
+          params: {
+            session_id: data.session_id
+          }
+        });
       })
       .then(user => {
         this.props.updateUser(user);
@@ -118,6 +108,11 @@ class LoginForm extends React.Component {
     }
   };
 
+  getClassName = fieldName =>
+    classNames("form-control", {
+      "is-invalid": this.state.errors[fieldName]
+    });
+
   render() {
     const { username, password, repeatPassword, errors, submitting } = this.state;
     return (
@@ -128,7 +123,7 @@ class LoginForm extends React.Component {
             <label htmlFor="username">Логин</label>
             <input
               type="text"
-              className="form-control"
+              className={this.getClassName("username")}
               id="username"
               name="username"
               placeholder="Логин"
@@ -142,7 +137,7 @@ class LoginForm extends React.Component {
             <label htmlFor="password">Пароль</label>
             <input
               type="text"
-              className="form-control"
+              className={this.getClassName("password")}
               id="password"
               name="password"
               placeholder="Пароль"
@@ -156,7 +151,7 @@ class LoginForm extends React.Component {
             <label htmlFor="repeatPassword">Повторить пароль</label>
             <input
               type="text"
-              className="form-control"
+              className={this.getClassName("repeatPassword")}
               id="repeatPassword"
               name="repeatPassword"
               placeholder="Пароль"

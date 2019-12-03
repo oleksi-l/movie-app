@@ -2,10 +2,12 @@ import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
 import Header from "./Header/Header";
-import { API_URL, API_KEY_3, fetchApi } from "../api/api";
+import { Modal, ModalBody } from "reactstrap";
+import LoginForm from "./Header/Login/LoginForm";
+import CallApi from "../api/api";
 import Cookies from "universal-cookie";
 
-const cookies = new Cookies();
+export const cookies = new Cookies();
 export const AppContext = React.createContext();
 
 export default class App extends React.Component {
@@ -20,13 +22,24 @@ export default class App extends React.Component {
         genres: []
       },
       page: 1,
-      total_pages: 500
+      total_pages: 500,
+      showModal: false
     };
     this.state = this.initialState;
   }
 
+  toggleModal = () => {
+    this.setState(prevState => ({
+      showModal: !prevState.showModal
+    }));
+  };
+
   updateUser = user => {
-    this.setState({ user });
+    cookies.set("user_id", user.id, {
+      path: "/",
+      maxAge: 2592000
+    });
+    this.setState({ user,showModal:false });
   };
 
   updateSessionId = session_id => {
@@ -64,26 +77,24 @@ export default class App extends React.Component {
     this.setState(this.initialState);
   };
 
-  updateUser = user => {
+  onLogOut = () => {
+    cookies.remove("session_id");
+    cookies.remove("user_id");
     this.setState({
-      user
-    });
-  };
-
-  updateSessionId = session_id => {
-    cookies.set("session_id", session_id, {
-      path: "/",
-      maxAge: 2592000
-    });
-    this.setState({
-      session_id
+      session_id: null,
+      user: null
     });
   };
 
   componentDidMount() {
     const session_id = cookies.get("session_id");
     if (session_id) {
-      fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`).then(
+      CallApi.get(`/account`,{
+        params:{
+          session_id: session_id
+        }
+      })
+      .then(
         user => {
           this.updateUser(user);
         }
@@ -92,19 +103,25 @@ export default class App extends React.Component {
   }
 
   render() {
-    // todo узнать зачем передавать session_id в LoginForm (там он получается в результате запроса)
     const { filters, page, total_pages, user } = this.state;
     return (
       <AppContext.Provider value={{
         user: user,
         updateUser: this.updateUser,
         updateSessionId: this.updateSessionId,
-        session_id: this.state.session_id
+        onLogOut: this.onLogOut,
+        session_id: this.state.session_id,
+        toggleModal: this.toggleModal
       }}>
         <div>
           <Header
             user={user}
           />
+          <Modal isOpen={this.state.showModal} toggle={this.toggleModal}>
+          <ModalBody>
+            <LoginForm />
+          </ModalBody>
+        </Modal>
           <div className="container">
             <div className="row mt-4">
               <div className="col-4">

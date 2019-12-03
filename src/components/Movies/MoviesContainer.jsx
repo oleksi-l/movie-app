@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import MoviesList from "./MoviesList";
 import { API_URL, API_KEY_3 } from "../../api/api";
-import queryString from "query-string";
 
 export default class MoviesContainer extends Component {
   constructor() {
@@ -51,8 +50,6 @@ export default class MoviesContainer extends Component {
 
   render() {
     const { movies } = this.state;
-    return (
-      <MoviesList movies={movies} />
-    )
+    return <MoviesList movies={movies} />;
   }
 }

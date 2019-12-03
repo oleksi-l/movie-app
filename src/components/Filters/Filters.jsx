@@ -12,7 +12,7 @@ export default class Filters extends React.Component {
       page,
       total_pages,
       resetFilters
-    } = this.props;
+    } = this.props; 
     return (
       <form className="mb-3">
         <SortBy

@@ -1,6 +1,5 @@
 import React from "react";
 import CallApi from "../../api/api";
-import LoginForm from "../Header/Login/LoginForm";
 import { cookies } from "../App";
 import AppContextHOC from "../HOC/AppContextHOC";
 import { Star, StarBorder, Bookmark, BookmarkBorder } from "@material-ui/icons";
@@ -33,7 +32,7 @@ class MovieActionTab extends React.Component {
         });
       });
     }
-  };  
+  };
 
   componentWillReceiveProps() {
     this.setState({
@@ -62,8 +61,7 @@ class MovieActionTab extends React.Component {
         page: this.props.page,
         favorite: !this.state.isFavorite
       }
-    })
-    .then(data => {
+    }).then(data => {
       this.setState({
         isFavorite: !this.state.isFavorite
       });
@@ -88,8 +86,7 @@ class MovieActionTab extends React.Component {
         media_id: item.id,
         watchlist: !this.state.inWatchList
       }
-    })
-    .then(data => {
+    }).then(data => {
       this.setState({
         inWatchList: !this.state.inWatchList
       });

@@ -1,7 +1,6 @@
 import React from "react";
 import SortGenres from "./SortGenres";
-import { API_KEY_3, API_URL } from "../../api/api";
-import queryString from "query-string";
+import CallApi from "../../api/api";
 
 export default class GenresContainer extends React.Component {
   constructor() {
@@ -12,18 +11,16 @@ export default class GenresContainer extends React.Component {
   }
 
   componentDidMount() {
-    const query = queryString.stringify({
-      api_key: API_KEY_3,
+    const query = {
       language: "ru-RU"
-    });
-    const url = `${API_URL}/genre/movie/list?${query}`;
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        this.setState({
-          genresList: data.genres
-        });
+    };
+    CallApi.get("/genre/movie/list", {
+      params: query
+    }).then(data => {
+      this.setState({
+        genresList: data.genres
       });
+    });
   }
 
   changeGenre = event => {
