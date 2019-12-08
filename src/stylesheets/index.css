@@ -8,3 +8,50 @@ body {
 .invalid-feedback {
   display: block;
 }
+.card-body{
+  padding: 0.5rem 1.25rem;
+}
+.poster__image{
+  max-width: 100%;
+  height: auto;
+}
+.genre-badge{
+	background: #007bff;
+	color: #fff;
+	padding: 5px;
+	margin-left: 5px; 
+}
+.nav-tabs .nav-item{
+  text-decoration: none;
+  color: #495057; 
+}
+.nav-tabs .nav-item .active{
+  background: #007bff;
+  border: 1px solid #dee2e6;
+  color: #fff;
+}
+.details-list {
+  padding: 0;
+  list-style: none;
+}
+.details-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid lightgray;
+}
+.actor-photo{
+  width: 138px;
+  height: 175px;
+}
+.actor-card{
+  max-width: 138px;
+}
+.actor-card .card-title,
+.actor-card .actor-character{
+  padding-left: 5px;
+  margin-bottom: 0;
+}
+.actor-character{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -15,9 +15,9 @@ export default Component =>
     }
 
     componentDidMount() {
-      this.getMovies(this.props.filters, this.props.page);
       this.getFavoriteMovies(this.props.filters, this.props.page);
       this.getWatchList(this.props.filters, this.props.page);
+      this.getMovies(this.props.filters, this.props.page);
     }
 
     getMovies = (filters, page) => {
@@ -82,15 +82,15 @@ export default Component =>
     componentDidUpdate(prevProps) {
       if (this.props.filters !== prevProps.filters) {
         this.props.updatePage(1);
-        this.getMovies(this.props.filters, 1);
         this.getFavoriteMovies(this.props.filters, 1);
         this.getWatchList(this.props.filters, 1);
+        this.getMovies(this.props.filters, 1);
       }
 
       if (this.props.page !== prevProps.page) {
-        this.getMovies(this.props.filters, this.props.page);
         this.getFavoriteMovies(this.props.filters, this.props.page);
         this.getWatchList(this.props.filters, this.props.page);
+        this.getMovies(this.props.filters, this.props.page);
       }
     }
 

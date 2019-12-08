@@ -3,15 +3,14 @@ import MovieItem from "./MovieItem";
 import PropTypes from "prop-types";
 import MoviesHOC from "./MoviesHOC";
 
-const MoviesList = ({ movies, favoriteMovies, watchList }) => {
+const MoviesList = (props) => {
+  const {movies, favoriteMovies, watchList} = props;
   return (
     <div className="row">
       {movies.map(movie => {
-        const isFavorite = favoriteMovies.includes(movie.id);
-        const inWatchList = watchList.includes(movie.id);
         return (
           <div key={movie.id} className="col-6 mb-4">
-            <MovieItem item={movie} isFavorite={isFavorite} inWatchList={inWatchList} />
+            <MovieItem item={movie} favoriteMovies={favoriteMovies} watchList={watchList} />
           </div>
         );
       })}
