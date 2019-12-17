@@ -16,7 +16,6 @@ export default class MoviesPages extends React.Component {
       },
       page: 1,
       total_pages: 500,
-      showModal: false
     };
     this.state = this.initialState;
   }

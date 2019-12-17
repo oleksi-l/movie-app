@@ -55,3 +55,22 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.loading{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  top: 0;
+  background: #007bff;
+  z-index: 0.9;
+  opacity: 1;
+}
+.loading p{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  color: #fff;
+}

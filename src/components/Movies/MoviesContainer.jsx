@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MoviesList from "./MoviesList";
-import { API_URL, API_KEY_3 } from "../../api/api";
+import {CallApi} from "../../api/api";
 
 export default class MoviesContainer extends Component {
   constructor() {
@@ -17,7 +17,6 @@ export default class MoviesContainer extends Component {
   getMovies = (filters, page) => {
     const { sort_by, year, genres } = filters;
     const query = {
-      api_key: API_KEY_3,
       primary_release_year: year,
       language: "ru-RU",
       sort_by: sort_by,
@@ -25,11 +24,7 @@ export default class MoviesContainer extends Component {
     };
     if (genres.length > 0) query.with_genres = genres.join(",");
 
-    const link = `${API_URL}/discover/movie?${queryString.stringify(query)}`;
-    fetch(link)
-      .then(response => {
-        return response.json();
-      })
+    CallApi.get("/discover/movie",{params:query})
       .then(data => {
         this.setState({
           movies: data.results

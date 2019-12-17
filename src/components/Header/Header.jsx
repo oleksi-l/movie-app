@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "./Login/Login";
 import UserMenu from "./UserMenu";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class Header extends React.Component {
   render() {

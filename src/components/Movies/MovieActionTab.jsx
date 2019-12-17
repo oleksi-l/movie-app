@@ -1,22 +1,17 @@
 import React from "react";
-import {Bookmark, BookmarkBorder,Favorite,FavoriteBorder } from "@material-ui/icons";
+import MovieFavoriteIcon from "./MovieFavoriteIcon";
+import MovieBookmarkIcon from "./MovieBookmarkIcon";
 
 const MovieActionTab = (props) => {
-    const {isFavorite,toggleLike,id,inWatchList,toggleAddWatchlist} = props;
+    const {movieId} = props;
     return (
       <div className="pt-2">
-        <span
-          title={isFavorite ? "liked" : "unliked"}
-          onClick={() => toggleLike(id)}
-        >
-          {!isFavorite ? <FavoriteBorder /> : <Favorite />}
-        </span>
-        <span
-          title={inWatchList ? "added" : "not added"}
-          onClick={() => toggleAddWatchlist(id)}
-        >
-          {!inWatchList ? <BookmarkBorder /> : <Bookmark />}
-        </span>
+          <MovieFavoriteIcon 
+            movieId={movieId} 
+          />
+          <MovieBookmarkIcon 
+            movieId={movieId}
+          />
       </div>
     )
 }

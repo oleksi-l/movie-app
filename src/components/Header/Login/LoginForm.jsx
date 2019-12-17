@@ -81,9 +81,13 @@ class LoginForm extends React.Component {
       })
       .then(user => {
         this.props.updateUser(user);
+        this.props.toggleModal();
         this.setState({
           submitting: false
         });
+        const { getWatchList, getFavoriteMovies, session_id } = this.props;
+        getWatchList(user.id, session_id);
+        getFavoriteMovies(this.props.user.id, session_id);
       })
       .catch(error => {
         this.setState({
@@ -188,6 +192,10 @@ export default props => {
           updateUser={context.updateUser}
           updateSessionId={context.updateSessionId}
           session_id={context.session_id}
+          user={context.user}
+          toggleModal={context.toggleModal}
+          getFavoriteMovies={context.getFavoriteMovies}
+          getWatchList={context.getWatchList}
         />
       )}
     </AppContext.Consumer>
