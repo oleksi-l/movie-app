@@ -1,9 +1,6 @@
 import React from "react";
 import Filters from "../../Filters/Filters";
 import MoviesList from "../../Movies/MoviesList";
-import CallApi from "../../../api/api";
-
-export const AppContext = React.createContext();
 
 export default class MoviesPages extends React.Component {
   constructor() {
