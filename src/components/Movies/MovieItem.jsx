@@ -13,7 +13,7 @@ export default class MovieItem extends React.Component {
           alt=""
         />
         <div className="col">
-          <MovieActionTab movieId={item.id} />
+          {/* <MovieActionTab movieId={item.id} /> */}
         </div>
         <div className="card-body">
           <Link className="card-title" to={`/movie/${item.id}`}>{item.title}</Link>

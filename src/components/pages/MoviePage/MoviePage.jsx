@@ -48,7 +48,7 @@ class MoviePage extends React.Component {
       </div>
       <div className="row">
       <div className="col-md-12 d-flex pt-3">
-          <Tabs id={id} />
+          {/* <Tabs id={id} /> */}
         </div>
       </div>
     </div>);

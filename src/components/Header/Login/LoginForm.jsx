@@ -54,6 +54,10 @@ class LoginForm extends React.Component {
   };
 
   onSubmit = () => {
+    this.setState({
+      submitting: true
+    });
+    let session_id = null;
     CallApi.get("/authentication/token/new", {})
       .then(data => {
         return CallApi.post("/authentication/token/validate_with_login", {
@@ -72,7 +76,7 @@ class LoginForm extends React.Component {
         });
       })
       .then(data => {
-        this.props.updateSessionId(data.session_id);
+        session_id = data.session_id;
         return CallApi.get("/account", {
           params: {
             session_id: data.session_id
@@ -80,14 +84,14 @@ class LoginForm extends React.Component {
         });
       })
       .then(user => {
-        this.props.updateUser(user);
         this.props.toggleModal();
         this.setState({
           submitting: false
         });
-        const { getWatchList, getFavoriteMovies, session_id } = this.props;
+        const { getWatchList, getFavoriteMovies, updateAuth } = this.props;
+        updateAuth(user,session_id);
         getWatchList(user.id, session_id);
-        getFavoriteMovies(this.props.user.id, session_id);
+        getFavoriteMovies(user.id, session_id);
       })
       .catch(error => {
         this.setState({
@@ -189,13 +193,12 @@ export default props => {
     <AppContext.Consumer>
       {context => (
         <LoginForm
-          updateUser={context.updateUser}
-          updateSessionId={context.updateSessionId}
           session_id={context.session_id}
           user={context.user}
           toggleModal={context.toggleModal}
           getFavoriteMovies={context.getFavoriteMovies}
           getWatchList={context.getWatchList}
+          updateAuth={context.updateAuth}
         />
       )}
     </AppContext.Consumer>
