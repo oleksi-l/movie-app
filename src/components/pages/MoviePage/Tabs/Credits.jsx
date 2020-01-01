@@ -1,5 +1,6 @@
 import React from "react";
 import CallApi from "../../../../api/api";
+import Loading from "../../../UI/Loading";
 import { withRouter } from 'react-router-dom';
 
 class Credits extends React.Component {
@@ -25,8 +26,9 @@ class Credits extends React.Component {
     return (
       <div className="d-flex flex-wrap">
         {this.state.isLoading ? (<div className="loading">
-          <p>Loading...</p>
-        </div>) : null}        {this.state.actors.map(actor => {
+          <Loading />
+        </div>) : null}        
+        {this.state.actors.map(actor => {
           return <div className="card actor-card mr-3 mt-3">
             <img className="actor-photo" src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`} />
             <p className="card-title">{actor.name}</p>

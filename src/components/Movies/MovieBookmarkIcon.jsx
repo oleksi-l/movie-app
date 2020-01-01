@@ -11,17 +11,19 @@ class MovieBookmarkIcon extends React.Component {
     }
   }
 
-  toggleAddWatchlist = movieId => {
-    const { session_id, user, watchList, getWatchList, toggleModal
-    } = this.props;
+  setLoading = state => {
+    this.setState({isLoading: state})
+  }
 
-    if (session_id === null) {
+  toggleAddWatchlist = movieId => {
+    const { session_id, user, getWatchList, toggleModal} = this.props;
+
+    if (!session_id) {
       toggleModal();
-      return false;
+      return;
     }
 
-    const inWatchList = watchList.includes(movieId);
-    this.setState({ isLoading: true })
+    this.setLoading(true);
 
     CallApi.post("/account/${user.id}/watchlist", {
       params: {
@@ -30,24 +32,27 @@ class MovieBookmarkIcon extends React.Component {
       body: {
         media_type: "movie",
         media_id: movieId,
-        watchlist: !inWatchList
+        watchlist: !this.inWatchList()
       }
     })
-      .then(data => {
-        getWatchList(user.id, session_id);
-        this.setState({ isLoading: false });
+      .then(() => {
+        getWatchList({user, session_id});
+        this.setLoading(false);
       });
   };
-  render() {
-    const { movieId, watchList } = this.props;
-    const inWatchList = watchList.includes(movieId);
-    
+
+inWatchList = () => {
+  const {watchList,movieId} = this.props;
+  return watchList.includes(movieId);
+}
+
+  render() {    
     return (
       <span
-        disabled={this.state.isLoading ? "disabled" : ""}
-        onClick={() => this.toggleAddWatchlist(movieId)}
+        disabled={this.state.isLoading}
+        onClick={() => this.toggleAddWatchlist(this.props.movieId)}
       >
-        {!inWatchList ? <BookmarkBorder /> : <Bookmark />}
+        {!this.inWatchList() ? <BookmarkBorder /> : <Bookmark />}
       </span>
     )
   }

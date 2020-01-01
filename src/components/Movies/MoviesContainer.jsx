@@ -22,6 +22,7 @@ export default class MoviesContainer extends Component {
       sort_by: sort_by,
       page: page
     };
+    
     if (genres.length > 0) query.with_genres = genres.join(",");
 
     CallApi.get("/discover/movie",{params:query})

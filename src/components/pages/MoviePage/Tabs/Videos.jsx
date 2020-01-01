@@ -1,5 +1,6 @@
 import React from "react";
 import CallApi from "../../../../api/api";
+import Loading from "../../../UI/Loading";
 import { withRouter } from 'react-router-dom';
 
 class Videos extends React.Component {
@@ -25,7 +26,7 @@ class Videos extends React.Component {
     return (
       <div>
         {this.state.isLoading ? (<div className="loading">
-          <p>Loading...</p>
+          <Loading />
         </div>):null}
         {this.state.videos.length > 0 && this.state.videos.map(video => {
           return <a target="_blank" href={`https://www.youtube.com/watch?v=${video.key}`}>

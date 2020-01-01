@@ -1,46 +1,45 @@
-import Cookies from "universal-cookie";
-
-const cookies = new Cookies();
+import * as types from "./auth.types";
+import { cookies } from "../../utils/cookies";
 
 const initialState = {
   user: null,
   session_id: cookies.get("session_id"),
   isAuth: false,
-  showModal: false
+  showModal: false,
+  favoriteMovies: [],
+  watchList: []
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "UPDATE_AUTH":
-      cookies.set("session_id", action.payload.session_id, {
-        path: "/",
-        maxAge: 2592000
-      });
-      console.log(action.payload);
+    case types.FETCH_SUCCESS_AUTH:
       return {
         ...state,
         user: action.payload.user,
         session_id: action.payload.session_id,
         isAuth: true
       };
-    case "LOGOUT":
-      cookies.remove("session_id");
+    case types.LOGOUT:
       return {
         ...state,
         session_id: null,
         user: null,
         isAuth: false
       };
-    case "TOGGLE_MODAL":
+    case types.TOGGLE_MODAL:
       return {
         ...state,
         showModal: !state.showModal
       };
-    case "UPDATE_FAVORITE_MOVIES":
+    case types.UPDATE_FAVORITE_MOVIES:
       return {
         ...state,
         favoriteMovies: action.payload
       };
+    case types.UPDATE_WATCHLIST:
+      return {
+        ...state, watchList: action.payload
+      }
     default:
       return state;
   }

@@ -89,9 +89,9 @@ class LoginForm extends React.Component {
           submitting: false
         });
         const { getWatchList, getFavoriteMovies, updateAuth } = this.props;
-        updateAuth(user,session_id);
-        getWatchList(user.id, session_id);
-        getFavoriteMovies(user.id, session_id);
+        updateAuth({user,session_id});
+        getWatchList({user, session_id});
+        getFavoriteMovies({user, session_id});
       })
       .catch(error => {
         this.setState({

@@ -10,16 +10,26 @@ class MovieFavoriteIcon extends React.Component {
       isLoading: false
     }
   }
+
+  setLoading = state => {
+    this.setState({ isLoading: state })
+  }
+
+  isFavorite = () => {
+    const { favoriteMovies, movieId } = this.props;
+    return favoriteMovies.includes(movieId);
+  }
+
   toggleLike = (movieId) => {
-    const { session_id, user, favoriteMovies, getFavoriteMovies,toggleModal
+    const { session_id, user, favoriteMovies, getFavoriteMovies, toggleModal
     } = this.props;
-    if (session_id === null) {
+
+    if (!session_id) {
       toggleModal();
       return false;
     }
 
-    const isFavorite = favoriteMovies.includes(movieId);
-    this.setState({ isLoading: true })
+    this.setLoading(true);
 
     CallApi.post(`/account/${user.id}/favorite`, {
       params: {
@@ -29,23 +39,21 @@ class MovieFavoriteIcon extends React.Component {
       body: {
         media_type: "movie",
         media_id: movieId,
-        favorite: !isFavorite
+        favorite: !this.isFavorite()
       }
     })
       .then(data => {
-        getFavoriteMovies(user.id, session_id);
-        this.setState({ isLoading: false })
+        getFavoriteMovies({ user, session_id });
+        this.setLoading(false);
       });
   };
+
   render() {
-    const { movieId, favoriteMovies } = this.props;
-    const isFavorite = favoriteMovies.includes(movieId);
-    
     return (
-      <span 
-        disabled={this.state.isLoading ? "disabled" : ""}
-        onClick={() => this.toggleLike(movieId)}>
-        {!isFavorite ? <FavoriteBorder /> : <Favorite />}
+      <span
+        disabled={this.state.isLoading}
+        onClick={() => this.toggleLike(this.props.movieId)}>
+        {!this.isFavorite() ? <FavoriteBorder /> : <Favorite />}
       </span>
     )
   }

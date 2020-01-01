@@ -1,5 +1,6 @@
 import React from "react";
 import CallApi from "../../../../api/api";
+import Loading from "../../../UI/Loading";
 import { withRouter } from 'react-router-dom';
 
 class Detail extends React.Component {
@@ -28,15 +29,28 @@ class Detail extends React.Component {
   }
 
   render() {
-    const { budget, genres, popularity, original_language, original_title,
-      production_companies, production_countries,
-      release_date, runtime, status, revenue } = this.state.details;
+    const {
+      details: {
+        budget,
+        genres,
+        popularity,
+        original_language,
+        original_title,
+        production_companies,
+        production_countries,
+        release_date,
+        runtime,
+        status,
+        revenue
+      }
+    } = this.state;
 
     return (
       <div>
         {this.state.isLoading ? (<div className="loading">
-          <p>Loading...</p>
-        </div>) : null}        <ul className="details-list mt-3">
+          <Loading />
+        </div>) : null}        
+        <ul className="details-list mt-3">
           <li>Статус {status}</li>
           <li>Дата выхода {release_date}</li>
           <li>Продолжительность {runtime ? runtime : "неизвестно"} мин.</li>

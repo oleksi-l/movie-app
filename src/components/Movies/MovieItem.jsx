@@ -1,5 +1,6 @@
 import React from "react";
 import MovieActionTab from "./MovieActionTab";
+import PosterImage from "../UI/PosterImage";
 import { Link } from "react-router-dom";
 
 export default class MovieItem extends React.Component {
@@ -7,13 +8,12 @@ export default class MovieItem extends React.Component {
     const { item } = this.props;
     return (
       <div className="card" style={{ width: "100%" }}>
-        <img
-          className="card-img-top card-img--height"
-          src={`https://image.tmdb.org/t/p/w500${item.backdrop_path || item.poster_path}`}
-          alt=""
+        <PosterImage 
+          className="card-img-top card-img--height" 
+          src={item.backdrop_path || item.poster_path} 
         />
         <div className="col">
-          {/* <MovieActionTab movieId={item.id} /> */}
+          <MovieActionTab movieId={item.id} />
         </div>
         <div className="card-body">
           <Link className="card-title" to={`/movie/${item.id}`}>{item.title}</Link>
